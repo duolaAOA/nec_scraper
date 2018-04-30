@@ -52,9 +52,9 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-   'nec_scraper.rotateUserAgentMiddleware.RotateUserAgentMiddleware': 399,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    'nec_scraper.rotateUserAgentMiddleware.RotateUserAgentMiddleware': 399,
+# }
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -62,11 +62,6 @@ DOWNLOADER_MIDDLEWARES = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
-# Configure item pipelines
-# See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'nec_scraper.pipelines.NecScraperPipeline': 300,
-#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +83,62 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 配置
+COOKIES_ENABLED = False  # 禁止COOKIES
+RETRY_ENABLED = False   # 禁止重试
+DOWNLOAD_TIMEOUT = 15   # 超时时限
+DOWNLOAD_DELAY = 0.5   # 间隔时间
+# DEPTH_LIMIT = 20 #爬取深度, 避免那些动态生成链接的网站造成的死循环
+
+# Redis 配置
+REDIS_RATELIMIT_DB_URL = "redis://localhost:6379/0"
+# redis —— url存储
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+REDIE_URL = None
+# redis —— 去重队列
+FILTER_URL = None
+FILTER_HOST = '127.0.0.1'
+FILTER_PORT = 6379
+FILTER_DB = 0
+
+# Mongodb 配置
+MONGO_URI = 'mongodb://localhost:27017'
+MONGO_DB = 'nec_scraper'
+MONGO_COLLECTION_NAME = "date"
+
+
+# 随user-agent头
+DOWNLOADER_MIDDLEWARES = {
+   'nec_scraper.rotateUserAgentMiddleware.RotateUserAgentMiddleware': 399,
+}
+
+ITEM_PIPELINES = {
+    'nec_scraper.pipelines.MongoPipeline': 1,
+}
+
+# 调度模块
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+SCHEDULER_PERSIST = True
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+# 没有这个会出现异常
+DOWNLOAD_HANDLERS = {'s3': None, }
+
+# 自定义命令
+COMMANDS_MODULE = 'nec_scraper.commands'
+
+# 日志
+from datetime import datetime
+t = datetime.strftime(datetime.now(), "%Y-%m-%d-%H-%M")
+LOG_FILE = "./log/huxiu-{}.log".format(t)
+LOG_LEVEL = "DEBUG"
+
+
+# 虎嗅网(huxiu)  www.huxiu.com
+huxiu_base_url = "https://www.huxiu.com"
+huxiu_start_urls = "huxiu:start_urls"
+huxiu_dupefilter = "huxiu:dupefilter"
+huxiu_requests = "huxiu:requests"

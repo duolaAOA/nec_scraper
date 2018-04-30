@@ -4,5 +4,11 @@ import sys
 import os
 from scrapy.cmdline import execute
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-execute(["scrapy", "crawl", "huxiu"])
+from nec_scraper.commands.startpush import StartPush
+
+
+# sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+startpush = StartPush()
+startpush.push()
+execute("scrapy crawlall".split())

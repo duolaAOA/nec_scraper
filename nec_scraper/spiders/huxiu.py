@@ -1,53 +1,35 @@
 # -*- coding: utf-8 -*-
+
+import re
+
 import scrapy
-from scrapy_redis.spiders import RedisSpider
+from scrapy_redis.spiders import RedisCrawlSpider
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import Rule
 
 from nec_scraper import lxml_select as ls
+from nec_scraper import settings
+from nec_scraper.items import ArticleItem
 
 
-class HuxiuSpider(RedisSpider):
+class HuxiuSpider(RedisCrawlSpider):
     name = "huxiu"
-    redis_key = "huxiu:start_urls"
-    huxiu_baseurls = "https://www.huxiu.com"
-    channelhref = set()
-    tagsHasBeenCrawled = False
-    tags = set()
+    redis_key = settings.huxiu_start_urls
+    allowed_domains = ['huxiu.com']
 
-    def parse(self, response):
-        channelhrefs = response.xpath(ls.CHANNELHREFS_X).extract()
-        for href in channelhrefs:
-            href = self.huxiu_baseurls + href
-            self.channelhref.add(href)
-        for href in self.channelhref:
-            yield scrapy.Request(url=href, callback=self.parse_channel)
-
-    def parse_channel(self, response):
-        """
-        处理每个分类栏目
-        :param response:   channelhrefs
-        :return:
-        """
-        topArticles=[]
-
-        hotArticles=[]
-
-        specials=[]
-
-        authors=[]
-
-        try:
-            topArticlesHrefs = response.xpath(ls.topArticlesHrefs_X)
-            for href in topArticlesHrefs:
-                topArticles.append(self.huxiu_baseurls + href)
-            try:
-                for href in topArticles:
-                    yield scrapy.Request(url=href, callback=self.parse_article)
-
-            except Exception as e:
-                self.logger.info('topArticlesHrefs faield:  ' + repr(str(e)))
-
-        except Exception as e:
-            self.logger.info('topArticles faield:  ' + repr(str(e)))
+    rules = (
+        Rule(LinkExtractor(allow="/article/"), callback="processArticle", follow=True),
+    )
 
     def parse_article(self, response):
-        pass
+        try:
+            article_id = re.search(r'\d+', response.url).group()
+            title = response.xpath(ls.HUXIU_TITLE).extract_first().strip()
+            content = ''.join(response.xpath(ls.HUXIU_CONTENT).extract())
+            item = ArticleItem()
+            item['articleId'] = article_id
+            item['articleTitle'] = title
+            item['articleContent'] = content
+            yield item
+        except:
+            self.logger.info('item in article failed')
