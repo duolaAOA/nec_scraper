@@ -15,74 +15,12 @@ SPIDER_MODULES = ['nec_scraper.spiders']
 NEWSPIDER_MODULE = 'nec_scraper.spiders'
 
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'nec_scraper (+http://www.yourdomain.com)'
+
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-# Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
 
-# Configure a delay for requests for the same website (default: 0)
-# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
-# See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
-# The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-#CONCURRENT_REQUESTS_PER_IP = 16
-
-# Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
-
-# Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
-
-# Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
-
-# Enable or disable spider middlewares
-# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'nec_scraper.middlewares.NecScraperSpiderMiddleware': 543,
-#}
-
-# Enable or disable downloader middlewares
-# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'nec_scraper.rotateUserAgentMiddleware.RotateUserAgentMiddleware': 399,
-# }
-
-# Enable or disable extensions
-# See https://doc.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
-
-
-# Enable and configure the AutoThrottle extension (disabled by default)
-# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
-# The initial download delay
-#AUTOTHROTTLE_START_DELAY = 5
-# The maximum download delay to be set in case of high latencies
-#AUTOTHROTTLE_MAX_DELAY = 60
-# The average number of requests Scrapy should be sending in parallel to
-# each remote server
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
-# Enable showing throttling stats for every response received:
-#AUTOTHROTTLE_DEBUG = False
-
-# Enable and configure HTTP caching (disabled by default)
-# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # 配置
 COOKIES_ENABLED = False  # 禁止COOKIES
@@ -117,7 +55,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'nec_scraper.pipelines.MongoPipeline': 1,
 }
-
+import scrapy_redis
 # 调度模块
 SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
 SCHEDULER_PERSIST = True
@@ -133,12 +71,36 @@ COMMANDS_MODULE = 'nec_scraper.commands'
 # 日志
 from datetime import datetime
 t = datetime.strftime(datetime.now(), "%Y-%m-%d-%H-%M")
-LOG_FILE = "./log/huxiu-{}.log".format(t)
+LOG_FILE = "./log/news-{}.log".format(t)
 LOG_LEVEL = "DEBUG"
 
 
-# 虎嗅网(huxiu)  www.huxiu.com
+# 虎嗅网(huxiu)
 huxiu_base_url = "https://www.huxiu.com"
 huxiu_start_urls = "huxiu:start_urls"
 huxiu_dupefilter = "huxiu:dupefilter"
 huxiu_requests = "huxiu:requests"
+
+# huaerjie——华尔街
+huaerjie_base_url = "https://wallstreetcn.com"
+huaerjie_start_urls = "huaerjie:start_urls"
+huaerjie_dupefilter = "huaerjie:dupefilter"
+huaerjie_requests = "huaerjie:requests"
+
+#fenghuang——凤凰网
+fenghuang_base_url='http://news.ifeng.com/'
+fenghuang_start_urls='fenghuang:start_urls'
+fenghuang_dupefilter='fenghuang:dupefilter'
+fenghuang_requests='fenghuang:requests'
+
+# souhu——搜狐网
+souhu_base_url='http://news.sohu.com/'
+souhu_start_urls='souhu:start_urls'
+souhu_dupefilter='souhu:dupefilter'
+souhu_requests='souhu:requests'
+
+# wangyi——网易新闻
+wangyi_base_url = "http://news.163.com/"
+wangyi_start_urls = "wangyi:start_urls"
+wangyi_dupefilter = "wangyi:dupefilter"
+wangyi_requests = "wangyi:requests"

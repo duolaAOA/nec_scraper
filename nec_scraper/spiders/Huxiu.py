@@ -2,7 +2,6 @@
 
 import re
 
-import scrapy
 from scrapy_redis.spiders import RedisCrawlSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule
@@ -13,12 +12,15 @@ from nec_scraper.items import ArticleItem
 
 
 class HuxiuSpider(RedisCrawlSpider):
+    """
+    虎嗅网 Spider
+    """
     name = "huxiu"
     redis_key = settings.huxiu_start_urls
     allowed_domains = ['huxiu.com']
 
     rules = (
-        Rule(LinkExtractor(allow="/article/"), callback="processArticle", follow=True),
+        Rule(LinkExtractor(allow="/article/"), callback="parse_article", follow=True),
     )
 
     def parse_article(self, response):
