@@ -1,13 +1,14 @@
+"""huxiu"""
 # -*- coding: utf-8 -*-
 
 import re
 
-from scrapy_redis.spiders import RedisCrawlSpider
-from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule
+from scrapy.linkextractors import LinkExtractor
+from scrapy_redis.spiders import RedisCrawlSpider
 
-from nec_scraper import lxml_select as ls
 from nec_scraper import settings
+from nec_scraper import lxml_select as ls
 from nec_scraper.items import ArticleItem
 
 
@@ -19,15 +20,25 @@ class HuxiuSpider(RedisCrawlSpider):
     redis_key = settings.huxiu_start_urls
     allowed_domains = ['huxiu.com']
 
-    rules = (
-        Rule(LinkExtractor(allow="/article/"), callback="parse_article", follow=True),
-    )
+    rules = (Rule(
+        LinkExtractor(allow=r"/article/"),
+        callback="parse_article",
+        follow=True), )
 
     def parse_article(self, response):
+        """
+        文章解析
+        :param response:
+        :return:  item
+        """
         try:
             article_id = re.search(r'\d+', response.url).group()
-            title = response.xpath(ls.HUXIU_TITLE).extract_first().strip()
-            content = ''.join(response.xpath(ls.HUXIU_CONTENT).extract())
+            title = response.xpath(ls.HUXIU_TITLE).extract_first("").strip()
+            try:
+                content = ''.join(response.xpath(ls.HUXIU_CONTENT).extract())
+            except IndexError:
+                raise IndexError("Unable to access web content!")
+
             item = ArticleItem()
             item['articleId'] = article_id
             item['articleTitle'] = title
