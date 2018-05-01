@@ -1,4 +1,3 @@
-"""huxiu"""
 # -*- coding: utf-8 -*-
 
 import re
@@ -27,17 +26,14 @@ class HuxiuSpider(RedisCrawlSpider):
 
     def parse_article(self, response):
         """
-        文章解析
+        虎嗅网文章解析
         :param response:
         :return:  item
         """
         try:
             article_id = re.search(r'\d+', response.url).group()
             title = response.xpath(ls.HUXIU_TITLE).extract_first("").strip()
-            try:
-                content = ''.join(response.xpath(ls.HUXIU_CONTENT).extract())
-            except IndexError:
-                raise IndexError("Unable to access web content!")
+            content = ''.join(response.xpath(ls.HUXIU_CONTENT).extract())
 
             item = ArticleItem()
             item['articleId'] = article_id

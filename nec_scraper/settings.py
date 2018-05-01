@@ -55,7 +55,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'nec_scraper.pipelines.MongoPipeline': 1,
 }
-import scrapy_redis
+
 # 调度模块
 SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
 SCHEDULER_PERSIST = True
@@ -87,17 +87,23 @@ huaerjie_start_urls = "huaerjie:start_urls"
 huaerjie_dupefilter = "huaerjie:dupefilter"
 huaerjie_requests = "huaerjie:requests"
 
-#fenghuang——凤凰网
-fenghuang_base_url='http://news.ifeng.com/'
-fenghuang_start_urls='fenghuang:start_urls'
-fenghuang_dupefilter='fenghuang:dupefilter'
-fenghuang_requests='fenghuang:requests'
+# caijing——财经
+caijing_base_url = "http://www.caijing.com.cn"
+caijing_start_urls = "caijing:start_urls"
+caijing_dupefilter = "caijing:dupefilter"
+caijing_requests = "caijing:requests"
+
+# fenghuang——凤凰网
+fenghuang_base_url = "http://news.ifeng.com/"
+fenghuang_start_urls = "fenghuang:start_urls"
+fenghuang_dupefilter = "fenghuang:dupefilter"
+fenghuang_requests = "fenghuang:requests"
 
 # souhu——搜狐网
-souhu_base_url='http://news.sohu.com/'
-souhu_start_urls='souhu:start_urls'
-souhu_dupefilter='souhu:dupefilter'
-souhu_requests='souhu:requests'
+souhu_base_url = "http://news.sohu.com"
+souhu_start_urls = "souhu:start_urls"
+souhu_dupefilter = "souhu:dupefilter"
+souhu_requests = "souhu:requests"
 
 # wangyi——网易新闻
 wangyi_base_url = "http://news.163.com/"

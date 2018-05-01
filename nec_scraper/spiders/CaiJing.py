@@ -28,17 +28,14 @@ class CaiJingWangSpider(RedisCrawlSpider):
 
     def parse_article(self, response):
         """
-        文章解析
+        财经网文章解析
         :param response:
         :return:  item
         """
         try:
             article_id = re.search(r'\d+', response.url).group()
             title = response.xpath(ls.CAIJING_TITLE).extract_first("")
-            try:
-                content = ''.join(response.xpath(ls.CAIJING_CONTENT).extract())
-            except IndexError:
-                raise IndexError("Unable to access web content!")
+            content = ''.join(response.xpath(ls.CAIJING_CONTENT).extract())
 
             item = ArticleItem()
             item['articleId'] = article_id
