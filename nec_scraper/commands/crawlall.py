@@ -1,8 +1,11 @@
 # -*-coding:utf-8 -*-
 
+import os
 from scrapy.commands import ScrapyCommand
 from scrapy.utils.conf import arglist_to_dict
-from .startpush import StartPush
+
+from .mysql_init import MysqlInit
+from .monitor_init import MonitorInit
 
 
 class Command(ScrapyCommand):
@@ -32,11 +35,17 @@ class Command(ScrapyCommand):
             raise UsageError("Invalid -a value, use -a NAME=VALUE", print_help=False)
 
     def run(self, args, opts):
+        # 初始化监控数据
+        MonitorInit().start()
+        #  初始化mysql数据库
+        mysql_init = MysqlInit()
+        mysql_init.start()
 
-        push = StartPush()
-        push.push()
         spider_loader = self.crawler_process.spider_loader
         for spidername in args or spider_loader.list():
             print("*********crawlall spidername************" + spidername)
+
+            # 整理爬虫所使用的redis队列
+            os.system("python mi/commands/SpiderInit_" + spidername + ".py")
             self.crawler_process.crawl(spidername, **opts.spargs)
             self.crawler_process.start()
