@@ -1,0 +1,32 @@
+[[source]]
+
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+requests = "*"
+scrapy = "*"
+selenium = "*"
+twisted = "*"
+"pywin32" = "*"
+pymysql = "*"
+pyquery = "*"
+redis = "*"
+parsel = "*"
+scrapely = "*"
+pymongo = "*"
+jieba = "*"
+flask = "*"
+tld = "*"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "3.6"
