@@ -13,4 +13,4 @@
     - statscol.py 爬虫状态收集 中间件
     
 -   展示效果
-![](https://github.com/duolaAOA/nec_scraper/tree/master/nec_scraper/images/spider_monitor_5_2.jpg?raw=true)
+![](https://github.com/duolaAOA/nec_scraper/blob/master/images/spider_monitor_5_2.jpg?raw=true)
