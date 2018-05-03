@@ -63,7 +63,7 @@ MYSQL_PASSWD = '1219960386'     # 密码
 
 # Monitor setting 监控配置
 MONITOR_HOST = '127.0.0.1'
-MONITOR_PORT = '5000'
+MONITOR_PORT = '5050'
 
 # scrapy.downloadermiddlewares.retry.RetryMiddleware 会造成程序陷入循环等待
 DOWNLOADER_MIDDLEWARES = {
@@ -72,9 +72,9 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-    'nec_scraper.pipelines.MongoPipeline': 300,
-    'nec_scraper.pipelines.MysqlPipeline': 301,
-    'nec_scraper.pipelines.pipeline_monitor.SpiderRunStatspipeline': 302,
+    'nec_scraper.pipelines.pipeline_mongo.MongoPipeline': 300,
+    'nec_scraper.pipelines.pipeline_mysql.MysqlPipeline': 301,
+    'nec_scraper.pipelines.pipeline_monitor.SpiderRunStatspipeline': 302,  # 可视化配置
 }
 
 # 调度模块

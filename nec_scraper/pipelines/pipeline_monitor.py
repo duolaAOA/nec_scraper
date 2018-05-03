@@ -14,7 +14,7 @@ class SpiderRunStatspipeline(object):
 
         r.set("spider_is_run", 1)
         try:
-            requests.get("http://" + settings.MONITOR_HOST + ':' + repr(settings.MONITOR_PORT) + "/signal?sign=running")
+            requests.get("http://" + settings.MONITOR_HOST + ':' + str(settings.MONITOR_PORT) + "/signal?sign=running")
         except requests.exceptions.ConnectionError:
             r.status_code = "Connection refused"
 
@@ -22,7 +22,7 @@ class SpiderRunStatspipeline(object):
 
         r.set("spider_is_run", 0)
         try:
-            requests.get('http://' + settings.MONITOR_HOST + ':' + repr(settings.MONITOR_PORT) + '/signal?sign=closed')
+            requests.get('http://' + settings.MONITOR_HOST + ':' + str(settings.MONITOR_PORT) + '/signal?sign=closed')
         except requests.exceptions.ConnectionError:
             r.status_code = "Connection refused"
 
