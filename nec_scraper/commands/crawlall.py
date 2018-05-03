@@ -46,6 +46,6 @@ class Command(ScrapyCommand):
             print("*********crawlall spidername************" + spidername)
 
             # 整理爬虫所使用的redis队列
-            os.system("python mi/commands/SpiderInit_" + spidername + ".py")
+            os.system("python nec_scraper/commands/SpiderInit_" + spidername + ".py")
             self.crawler_process.crawl(spidername, **opts.spargs)
             self.crawler_process.start()
