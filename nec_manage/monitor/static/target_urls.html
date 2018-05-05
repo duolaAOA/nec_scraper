@@ -20,7 +20,7 @@
     <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js"></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>添加动态Spider - MiFront</title>
+    <title>目标URLS - MiFront</title>
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -33,10 +33,10 @@
                href="javascript:;">&#xe667;</a>
             <nav class="nav navbar-nav nav-collapse" role="navigathttp://www.h-ui.net/ion" id="Hui-navbar">
                 <ul class="cl">
-                    <li class="current"><a href="#">首页</a></li>
+                    <li><a href="index.html">首页</a></li>
                     <li><a href="add_spider.html">添加动态Spider</a></li>
                     <li><a href="add_ip.html">添加代理IP</a></li>
-                    <li><a href="target_urls.html">目标URLS</a></li>
+                    <li class="current"><a href="#">目标URLS</a></li>
                     <li><a href="http://www.zzkun.com" target="_blank">联系我们</a></li>
                 </ul>
             </nav>
@@ -45,27 +45,41 @@
     </div>
 </header>
 
-<div id="slider-3">
-    <div class="slider">
-        <div class="bd">
-            <ul>
-                <li><a href="http://www.h-ui.net/" target="_blank"><img src="temp/banner1.jpg" ></a></li>
-                <li><a href="http://www.h-ui.net/zhaoshang.shtml" target="_blank"><img src="temp/banner2.jpg" ></a></li>
-                <li><a href="http://h-ui.net/H-ui.admin.shtml" target="_blank"><img src="temp/banner3.jpg" ></a></li>
-            </ul>
-        </div>
-        <ol class="hd cl dots">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-        </ol>
+<nav class="breadcrumb">
+    <div class="container">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        <a href="index.html" class="c-primary">首页</a>
+        <span class="c-gray en">&gt;</span>
+        <span class="c-gray">目标URLS</span>
     </div>
-</div>
-
-
+</nav>
 <section class="container">
     <div style="margin-top: 15px"></div>
-    <h1 style="margin-left: 15%">Mi 管理中心 欢迎您！</h1>
+    <div class="panel panel-default">
+        <div class="panel-header">提交目标URLS</div>
+        <div class="panel-body">
+            <div class="form form-horizontal responsive">
+
+                <div class="row cl">
+                    <label class="form-label col-xs-3">目标ULRS</label>
+                    <div class="formControls col-xs-7">
+                        <textarea cols="" rows="" class="textarea" name="urls" id="urls"
+                                  style="height: 600px"
+                                  placeholder="URL，一行一个"></textarea>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <div class="col-xs-8 col-xs-offset-3">
+                        <input class="btn btn-primary"
+                               type="submit"
+                               value="&nbsp;&nbsp;提交&nbsp;&nbsp;"
+                               onclick="submit_target_urls()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <footer class="footer mt-20">
     <div class="container">
@@ -118,59 +132,59 @@
         });
 
         /*+1 -1效果*/
-        $("#spinner-demo").Spinner({value: 1, min: 1, len: 2, max: 99});
-
-        $("#demoform").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true,
-                },
-                username: {
-                    required: true,
-                    minlength: 4,
-                    maxlength: 16
-                },
-                telephone: {
-                    required: true,
-                    isMobile: true,
-                },
-                password: {
-                    required: true,
-                    isPwd: true,
-                },
-                password2: {
-                    required: true,
-                    equalTo: "#password"
-                },
-                sex: {
-                    required: true,
-                },
-                datetimepicker: {
-                    required: true,
-                },
-                checkbox2: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
-                website: {
-                    required: true,
-                    url: true,
-                },
-                beizhu: {
-                    maxlength: 500,
-                }
-            },
-            onkeyup: false,
-            focusCleanup: true,
-            success: "valid",
-            submitHandler: function (form) {
-                $("#modal-shenqing-success").modal("show");
-                $(form).ajaxSubmit();
-            }
-        });
+//        $("#spinner-demo").Spinner({value: 1, min: 1, len: 2, max: 99});
+//
+//        $("#demoform").validate({
+//            rules: {
+//                email: {
+//                    required: true,
+//                    email: true,
+//                },
+//                username: {
+//                    required: true,
+//                    minlength: 4,
+//                    maxlength: 16
+//                },
+//                telephone: {
+//                    required: true,
+//                    isMobile: true,
+//                },
+//                password: {
+//                    required: true,
+//                    isPwd: true,
+//                },
+//                password2: {
+//                    required: true,
+//                    equalTo: "#password"
+//                },
+//                sex: {
+//                    required: true,
+//                },
+//                datetimepicker: {
+//                    required: true,
+//                },
+//                checkbox2: {
+//                    required: true,
+//                },
+//                city: {
+//                    required: true,
+//                },
+//                website: {
+//                    required: true,
+//                    url: true,
+//                },
+//                beizhu: {
+//                    maxlength: 50000000,
+//                }
+//            },
+//            onkeyup: false,
+//            focusCleanup: true,
+//            success: "valid",
+//            submitHandler: function (form) {
+//                $("#modal-shenqing-success").modal("show");
+//                $(form).ajaxSubmit();
+//            }
+//        });
 
         //选项卡
         $.Huitab("#tab_demo .tabBar span", "#tab_demo .tabCon", "current", "click", "1");
@@ -208,6 +222,19 @@
     }
 </script>
 
+<script>
+    var POST_URL = "http://192.168.210.220:5020/target_urls";
+    function submit_target_urls() {
+        var js = {
+            urls: $("#urls").val().split('\n')
+        };
+        var str = JSON.stringify(js);
+        console.log(str);
+        $.post(POST_URL, {urls: str}).success(function () {
+            alert("提交目标URL成功！");
+        });
+    }
+</script>
 
 </body>
 </html>
