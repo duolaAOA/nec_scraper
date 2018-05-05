@@ -9,31 +9,31 @@ BOT_NAME = 'nec_scraper'
 SPIDER_MODULES = ['nec_scraper.spiders']
 NEWSPIDER_MODULE = 'nec_scraper.spiders'
 
-ROBOTSTXT_OBEY = False
 
 # 代理文件路径
 HTTPPROXY_FILE_PATH = os.path.abspath(os.path.join(BASE_DIR, "proxy/valid_proxy.txt"))
 
 
 # 配置
+ROBOTSTXT_OBEY = False    # 不遵循robots协议
 COOKIES_ENABLED = False  # 禁止COOKIES
 RETRY_ENABLED = False   # 禁止重试
 DOWNLOAD_TIMEOUT = 15   # 超时时限
 DOWNLOAD_DELAY = 0.5   # 间隔时间
+CONCURRENT_REQUESTS_PER_DOMAIN = 20     # 对单个域名最大并发量
 
 RETRY_HTTP_CODES = [500, 503, 504, 599, 403]    # 重试状态码
 RETRY_TIMES = 5  # 请求连接失败重试次数
 PROXY_USED_TIMES = 2    # proxy 失败重试次数
+
+
 # DEPTH_LIMIT = 20 #爬取深度, 避免那些动态生成链接的网站造成的死循环
 
 # Redis 数据库配置
-REDIS_RATELIMIT_DB_URL = "redis://localhost:6379/0"
 # redis —— url存储
 REDIS_HOST = '127.0.0.1'
 REDIS_PORT = 6379
-REDIE_URL = None
 # redis —— 去重队列
-FILTER_URL = None
 FILTER_HOST = '127.0.0.1'
 FILTER_PORT = 6379
 FILTER_DB = 0
@@ -62,7 +62,7 @@ MYSQL_USER = 'root'             # 用户名
 MYSQL_PASSWD = '1219960386'     # 密码
 
 # Monitor setting 监控配置
-MONITOR_HOST = '127.0.0.1'
+MONITOR_HOST = '0.0.0.0'
 MONITOR_PORT = '5050'
 
 # scrapy.downloadermiddlewares.retry.RetryMiddleware 会造成程序陷入循环等待
@@ -78,10 +78,10 @@ ITEM_PIPELINES = {
 }
 
 # 调度模块
-SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+SCHEDULER = 'nec_scraper.scrapy_redis.scheduler.Scheduler'
 SCHEDULER_PERSIST = True
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
-DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+SCHEDULER_QUEUE_CLASS = 'nec_scraper.scrapy_redis.queue.SpiderQueue'
+
 
 # 没有这个会出现异常
 DOWNLOAD_HANDLERS = {'s3': None, }

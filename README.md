@@ -1,6 +1,10 @@
 # nec_scraper
 新闻电商分布式爬虫
 
+### 项目版本
+* python== 3.6
+* scrapy == 1.5
+
 ## 项目结构
 ```
 ├─images        存放测试结果文件夹
@@ -67,6 +71,7 @@
 │  ├─unused        
 │  │      Fenghuang.py
 │  │      HuXiu.py
+│  │      JingDong.py
 │  │      SouHu.py
 │  │      WallStreetcn.py
 │  │      WangYi.py

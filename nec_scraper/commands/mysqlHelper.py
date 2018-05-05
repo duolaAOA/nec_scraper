@@ -59,8 +59,6 @@ class MysqlHelper(object):
 
     def insert(self, sql, *args):
         conn = self.connect_database()
-        print(sql)
-        print(args)
 
         cur = conn.cursor()
         try:
@@ -109,8 +107,6 @@ create_sql_1 = '''CREATE TABLE `ecommerceshop` (
       `shopId` bigint(20) NOT NULL COMMENT '店铺id',
       `shopName` varchar(48) COLLATE utf8_bin DEFAULT NULL COMMENT '店名',
       `shopUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺url链接',
-      `shopLocation` varchar(72) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺地址',
-      `shopPhoneNumber` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '店家电话',
       PRIMARY KEY (`shopId`,`eCommerceId`),
       KEY `eCommerceId` (`eCommerceId`),
       CONSTRAINT `ecommerceshop_ibfk_1` FOREIGN KEY (`eCommerceId`) REFERENCES `ecommerce` (`eCommerceId`)

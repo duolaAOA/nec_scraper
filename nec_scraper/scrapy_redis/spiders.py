@@ -21,7 +21,6 @@ class RedisMixin(object):
 
     def setup_redis(self, crawler=None):
         """Setup redis connection and idle signal.
-
         This should be called after the spider has set its crawler object.
         """
         if self.server is not None:
@@ -96,15 +95,12 @@ class RedisMixin(object):
 
     def make_request_from_data(self, data):
         """Returns a Request instance from data coming from Redis.
-
         By default, ``data`` is an encoded URL. You can override this method to
         provide your own message decoding.
-
         Parameters
         ----------
         data : bytes
             Message from redis.
-
         """
         url = bytes_to_str(data, self.redis_encoding)
         return self.make_requests_from_url(url)
@@ -124,7 +120,6 @@ class RedisMixin(object):
 
 class RedisSpider(RedisMixin, Spider):
     """Spider that reads urls from redis queue when idle.
-
     Attributes
     ----------
     redis_key : str (default: REDIS_START_URLS_KEY)
@@ -133,7 +128,6 @@ class RedisSpider(RedisMixin, Spider):
         Number of messages to fetch from redis on each attempt.
     redis_encoding : str (default: REDIS_ENCODING)
         Encoding to use when decoding messages from redis queue.
-
     Settings
     --------
     REDIS_START_URLS_KEY : str (default: "<spider.name>:start_urls")
@@ -145,7 +139,6 @@ class RedisSpider(RedisMixin, Spider):
         the messages are retrieve using the LPOP command.
     REDIS_ENCODING : str (default: "utf-8")
         Default encoding to use when decoding messages from redis queue.
-
     """
 
     @classmethod
@@ -157,7 +150,6 @@ class RedisSpider(RedisMixin, Spider):
 
 class RedisCrawlSpider(RedisMixin, CrawlSpider):
     """Spider that reads urls from redis queue when idle.
-
     Attributes
     ----------
     redis_key : str (default: REDIS_START_URLS_KEY)
@@ -166,7 +158,6 @@ class RedisCrawlSpider(RedisMixin, CrawlSpider):
         Number of messages to fetch from redis on each attempt.
     redis_encoding : str (default: REDIS_ENCODING)
         Encoding to use when decoding messages from redis queue.
-
     Settings
     --------
     REDIS_START_URLS_KEY : str (default: "<spider.name>:start_urls")
@@ -177,7 +168,6 @@ class RedisCrawlSpider(RedisMixin, CrawlSpider):
         Use SET operations to retrieve messages from the redis queue.
     REDIS_ENCODING : str (default: "utf-8")
         Default encoding to use when decoding messages from redis queue.
-
     """
 
     @classmethod

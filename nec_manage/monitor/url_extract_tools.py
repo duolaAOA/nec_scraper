@@ -10,6 +10,3 @@ def extract_main_url(urls):
         if cur:
             res = cur
     return res
-
-a = extract_main_url('https://github.com/724686158/mi')
-print(a)

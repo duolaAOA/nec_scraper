@@ -49,10 +49,6 @@ class ECommerceShopItem(Field):
     shopName = Field()
     # 店铺url链接
     shopUrl = Field()
-    # 店铺地址
-    shopLocation = Field()
-    # 店家电话
-    shopPhoneNumber = Field()
 
 
 # 电商网店店铺评论item

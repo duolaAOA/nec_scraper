@@ -4,7 +4,7 @@ import re
 
 from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
-from scrapy_redis.spiders import RedisCrawlSpider
+from nec_scraper.scrapy_redis.spiders import RedisCrawlSpider
 
 from nec_scraper import settings
 from nec_scraper import lxml_select as ls

@@ -13,7 +13,7 @@ spider_template = \
 import jieba.analyse
 from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
-from scrapy_redis.spiders import RedisCrawlSpider
+from nec_scraper.scrapy_redis.spiders import RedisCrawlSpider
 
 from nec_scraper.items import ArticleItem
 

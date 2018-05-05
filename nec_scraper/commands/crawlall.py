@@ -1,11 +1,12 @@
 # -*-coding:utf-8 -*-
 
 import os
+
 from scrapy.commands import ScrapyCommand
 from scrapy.utils.conf import arglist_to_dict
 
-from .mysql_init import MysqlInit
-from .monitor_init import MonitorInit
+from nec_scraper.commands.mysql_init import MysqlInit
+from nec_scraper.commands.monitor_init import MonitorInit
 
 
 class Command(ScrapyCommand):
