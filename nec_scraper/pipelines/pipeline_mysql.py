@@ -23,7 +23,7 @@ class MysqlPipeline(object):
             host=settings["MYSQL_HOST"],
             db=settings["MYSQL_DBNAME"],
             user=settings["MYSQL_USER"],
-            passwd=settings["MYSQL_PASSWORD"],
+            passwd=settings["MYSQL_PASSWD"],
             port=settings["MYSQL_PORT"],
             charset='utf8',
             cursorclass=pymysql.cursors.DictCursor,
@@ -66,7 +66,7 @@ class MysqlPipeline(object):
         :return:
         """
         insert_sql = '''INSERT INTO ECommerce(eCommerceId, eCommerceName, eCommerceUrl) 
-                        VALUES(%s, %s, %s)'''.encode(encoding='utf-8')
+                        VALUES(%s, %s, %s)'''
 
         params = (item["eCommerceId"], item["eCommerceName"],
                   item["eCommerceUrl"])
@@ -80,8 +80,7 @@ class MysqlPipeline(object):
         """
         insert_sql = '''INSERT INTO ECommerceShop(eCommerceId, shopId, shopName, shopUrl, 
                                     shopLocation, shopPhoneNumber) 
-                        VALUES(%s, %s, %s, %s, %s, %s)'''.encode(
-            encoding='utf-8')
+                        VALUES(%s, %s, %s, %s, %s, %s)'''
 
         params = (item["eCommerceId"], item["eCommerceName"],
                   item["eCommerceUrl"])
@@ -94,7 +93,7 @@ class MysqlPipeline(object):
         :return:
         """
         insert_sql = '''INSERT INTO ECommerceShopComment(eCommerceId, shopId, shopCommentsUrl, shopCommentsData)
-                        VALUES(%s, %s, %s,%s)'''.encode(encoding='utf-8')
+                        VALUES(%s, %s, %s,%s)'''
         params = (item["eCommerceId"], item["shopId"], item["shopCommentsUrl"],
                   item["shopCommentsData"])
         cursor.execute(insert_sql, params)
@@ -106,8 +105,7 @@ class MysqlPipeline(object):
         :return:
         """
         insert_sql = '''INSERT INTO ECommerceGood(eCommerceId, goodId, shopId, goodName, goodUrl, goodPrice) 
-                        VALUES(%s, %s, %s, %s, %s, %s)'''.encode(
-            encoding='utf-8')
+                        VALUES(%s, %s, %s, %s, %s, %s)'''
 
         params = (item["eCommerceId"], item["goodId"], item["shopId"],
                   item["goodName"], item["goodUrl"], item["goodPrice"])
@@ -119,11 +117,12 @@ class MysqlPipeline(object):
         :param item:    item数据字段: 8
         :return:
         """
-        insert_sql = '''INSERT INTO ECommerceGoodComment(eCommerceId, goodId, goodCommentsUrl, goodCommentsData) 
-                        VALUES(%s, %s, %s, %s)'''.encode(encoding='utf-8')
+        insert_sql = '''INSERT INTO ECommerceGoodComment(eCommerceId, goodId, goodCommentsUrl, 
+                                      goodCommentsData, goodCommentCounts) 
+                        VALUES(%s, %s, %s, %s, %s)'''
 
         params = (item["eCommerceId"], item["goodId"], item["goodCommentsUrl"],
-                  item["goodCommentsData"])
+                  item["goodCommentsData"], item["goodCommentCounts"])
         cursor.execute(insert_sql, params)
 
     def _handle_error(self, failure, item, spider):

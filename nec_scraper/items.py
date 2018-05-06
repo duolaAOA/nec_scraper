@@ -89,3 +89,5 @@ class ECommerceGoodCommentItem(Item):
     goodCommentsUrl = Field()
     # 商品评论数据
     goodCommentsData = Field()
+    # 商品评论数量
+    goodCommentCounts = Field()

@@ -47,3 +47,15 @@ JINGDONG_SHOP_URL = '''//div[@class='shop-logo-box']/a/@href'''
 JINGDONG_SHOP_NAME = '''//*[@id='crumb-wrap']//div[@class='name']/a/@title'''
 JINGDONG_TOTAL_RATING = '''//*[@class='score-sum']/span/text()'''
 JINGDONG_TOTAL_SCORE = '''//*[@class='score-parts']//span[@class='score-detail']/em/text()'''
+
+
+# amazon  亚马逊
+AMAZON_SHOP_NAME = '''//*[@id='ddmMerchantMessage']/text() | //*[@id='ddmMerchantMessage']/b/text() | //*[@id='ddmMerchantMessage']/a/text()'''
+AMAZON_SHOP_URL = '''//*[@id='ddmMerchantMessage']/a/@href'''
+# 自营
+AMAZON_GOOD_NAME = '''//*[@id='productTitle']/text()'''
+AMAZON_GOOD_PRICE = '''//*[@id='olp_feature_div']/div/span/span/text()'''
+AMAZON_GOOD_COMMENT_URL = '''//*[@id='dp-summary-see-all-reviews']/@href'''
+AMAZON_GOOD_COMMENT_START = '''//*[@id='reviewSummary']//span[contains(@class, 'totalReviewCount')]/text()'''
+AMAZON_GOOD_COMMENT = '''//div[@data-hook='review-collapsed']/text()'''
+AMAZON_SHOP_COMMENT = '''//*[@class='feedback-comment']/text()'''

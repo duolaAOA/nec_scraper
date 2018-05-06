@@ -57,12 +57,12 @@ class MysqlHelper(object):
         cur.close()
         conn.close()
 
-    def insert(self, sql, *args):
+    def insert(self, sql, *params):
         conn = self.connect_database()
 
         cur = conn.cursor()
         try:
-            cur.execute(sql, args)
+            cur.execute(sql, params)
         except:
             conn.rollback()
         else:
@@ -70,11 +70,11 @@ class MysqlHelper(object):
             cur.close()
             conn.close()
 
-    def update(self, sql, *args):
+    def update(self, sql, *params):
         conn = self.connect_database()
         cur = conn.cursor()
         try:
-            cur.execute(sql, args)
+            cur.execute(sql, params)
         except:
             conn.rollback()
         else:
@@ -82,10 +82,10 @@ class MysqlHelper(object):
             cur.close()
             conn.close()
 
-    def delete(self, sql, *args):
+    def delete(self, sql, *params):
         conn = self.connect_database()
         cur = conn.cursor()
-        cur.execute(sql, args)
+        cur.execute(sql, params)
         conn.commit()
         cur.close()
         conn.close()
@@ -97,16 +97,16 @@ class MysqlHelper(object):
 
 create_sql_0 = '''CREATE TABLE `ecommerce` (
         `eCommerceId` int(11) NOT NULL COMMENT '电商网站Id',
-        `eCommerceName` varchar(48) COLLATE utf8_bin DEFAULT NULL COMMENT '电商网站名字',
-        `eCommerceUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '电商网站home页url',
+        `eCommerceName` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '电商网站名字',
+        `eCommerceUrl` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '电商网站home页url',
         PRIMARY KEY (`eCommerceId`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;'''
 
 create_sql_1 = '''CREATE TABLE `ecommerceshop` (
       `eCommerceId` int(11) NOT NULL COMMENT '电商网址id',
-      `shopId` bigint(20) NOT NULL COMMENT '店铺id',
-      `shopName` varchar(48) COLLATE utf8_bin DEFAULT NULL COMMENT '店名',
-      `shopUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺url链接',
+      `shopId` varchar(16) NOT NULL COMMENT '店铺id',
+      `shopName` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '店名',
+      `shopUrl` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺url链接',
       PRIMARY KEY (`shopId`,`eCommerceId`),
       KEY `eCommerceId` (`eCommerceId`),
       CONSTRAINT `ecommerceshop_ibfk_1` FOREIGN KEY (`eCommerceId`) REFERENCES `ecommerce` (`eCommerceId`)
@@ -114,9 +114,9 @@ create_sql_1 = '''CREATE TABLE `ecommerceshop` (
 
 create_sql_2 = '''CREATE TABLE `ecommerceshopcomment` (
       `eCommerceId` int(11) NOT NULL COMMENT '电商网站Id',
-      `shopId` bigint(20) NOT NULL COMMENT '店家id',
-      `shopCommentsUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '店家评论页的链接',
-      `shopCommentsData` varchar(400) COLLATE utf8_bin DEFAULT NULL COMMENT '店家评论数据',
+      `shopId` varchar(16) NOT NULL COMMENT '店家id',
+      `shopCommentsUrl` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '店家评论页的链接',
+      `shopCommentsData` varchar(2018) COLLATE utf8_bin DEFAULT NULL COMMENT '店家评论数据',
       PRIMARY KEY (`shopId`,`eCommerceId`),
       KEY `eCommerceId` (`eCommerceId`),
       CONSTRAINT `ecommerceshopcomment_ibfk_1` FOREIGN KEY (`eCommerceId`) REFERENCES `ecommerce` (`eCommerceId`)
@@ -124,11 +124,11 @@ create_sql_2 = '''CREATE TABLE `ecommerceshopcomment` (
 
 create_sql_3 = '''CREATE TABLE `ecommercegood` (
       `eCommerceId` int(11) NOT NULL COMMENT '电商网站Id',
-      `goodId` bigint(20) NOT NULL COMMENT '商品id',
-      `shopId` bigint(20) DEFAULT NULL COMMENT '店家id',
-      `goodName` varchar(400) COLLATE utf8_bin DEFAULT NULL COMMENT '商品名字',
-      `goodUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '商品链接',
-      `goodPrice` decimal(10,0) DEFAULT NULL COMMENT '商品价格',
+      `goodId` varchar(32) NOT NULL COMMENT '商品id',
+      `shopId` varchar(32) DEFAULT NULL COMMENT '店家id',
+      `goodName` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '商品名字',
+      `goodUrl` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '商品链接',
+      `goodPrice` VARCHAR (10) DEFAULT NULL COMMENT '商品价格',
       PRIMARY KEY (`goodId`,`eCommerceId`),
       KEY `eCommerceId` (`eCommerceId`),
       CONSTRAINT `ecommercegood_ibfk_1` FOREIGN KEY (`eCommerceId`) REFERENCES `ecommerce` (`eCommerceId`)
@@ -136,9 +136,10 @@ create_sql_3 = '''CREATE TABLE `ecommercegood` (
 
 create_sql_4 = '''CREATE TABLE `ecommercegoodcomment` (
       `eCommerceId` int(11) NOT NULL COMMENT '电商网站Id',
-      `goodId` bigint(20) NOT NULL COMMENT '商品的id',
-      `goodCommentsUrl` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '商品评论页的链接',
-      `goodCommentsData` varchar(1600) COLLATE utf8_bin DEFAULT NULL COMMENT '商品评论数据',
+      `goodId` varchar(32) NOT NULL COMMENT '商品的id',
+      `goodCommentsUrl` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '商品评论页的链接',
+      `goodCommentsData` varchar(9096) COLLATE utf8_bin DEFAULT NULL COMMENT '商品评论数据',
+      `goodCommentCounts` int(9) COLLATE utf8_bin DEFAULT NULL COMMENT '商品评论数量',
       PRIMARY KEY (`goodId`,`eCommerceId`),
       KEY `eCommerceId` (`eCommerceId`),
       CONSTRAINT `ecommercegoodcomment_ibfk_1` FOREIGN KEY (`eCommerceId`) REFERENCES `ecommerce` (`eCommerceId`)

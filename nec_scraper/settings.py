@@ -10,10 +10,6 @@ SPIDER_MODULES = ['nec_scraper.spiders']
 NEWSPIDER_MODULE = 'nec_scraper.spiders'
 
 
-# 代理文件路径
-HTTPPROXY_FILE_PATH = os.path.abspath(os.path.join(BASE_DIR, "proxy/valid_proxy.txt"))
-
-
 # 配置
 ROBOTSTXT_OBEY = False    # 不遵循robots协议
 COOKIES_ENABLED = False  # 禁止COOKIES
@@ -23,10 +19,16 @@ DOWNLOAD_DELAY = 0.5   # 间隔时间
 CONCURRENT_REQUESTS_PER_DOMAIN = 20     # 对单个域名最大并发量
 
 RETRY_HTTP_CODES = [500, 503, 504, 599, 403]    # 重试状态码
-RETRY_TIMES = 5  # 请求连接失败重试次数
+RETRY_TIMES = 3  # 请求连接失败重试次数
 PROXY_USED_TIMES = 2    # proxy 失败重试次数
 
-
+# 代理的文件路径
+PROXY_LIST = os.path.abspath(os.path.join(BASE_DIR, "proxy/valid_proxy.txt"))
+# Proxy mode
+# 0 = Every requests have different proxy
+# 1 = Take only one proxy from the list and assign it to every requests
+# 2 = Put a custom proxy to use in the settings
+PROXY_MODE = 0
 # DEPTH_LIMIT = 20 #爬取深度, 避免那些动态生成链接的网站造成的死循环
 
 # Redis 数据库配置
@@ -67,8 +69,10 @@ MONITOR_PORT = '5050'
 
 # scrapy.downloadermiddlewares.retry.RetryMiddleware 会造成程序陷入循环等待
 DOWNLOADER_MIDDLEWARES = {
-   'nec_scraper.middlewares.middleware_rotateUserAgent.RotateUserAgentMiddleware': 400,
-   'nec_scraper.middlewares.middleware_monitor.StatcollectorMiddleware': 401,
+   'nec_scraper.middlewares.middleware_randomproxy.RandomProxyMiddleware': 401,
+   'nec_scraper.middlewares.middleware_rotateUserAgent.RotateUserAgentMiddleware': 401,
+   'nec_scraper.middlewares.middleware_monitor.StatcollectorMiddleware': 402,
+   'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 403,
 }
 
 ITEM_PIPELINES = {
