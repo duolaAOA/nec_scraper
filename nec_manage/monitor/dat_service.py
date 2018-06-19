@@ -41,3 +41,13 @@ def split_target_urls(urls):
             r.rpush(1, url)
         else:
             r.rpush(0, url)
+
+
+def get_spider_count_from_db():
+    r = get_redis(REDIS_DB)
+    keys = r.keys()
+    arr = []
+    for i in keys:
+        if 'item_scraped_count_' in i:
+            arr.append(i[i.rfind('_') + 1:])
+    return arr

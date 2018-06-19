@@ -64,10 +64,17 @@ def target_urls():
     urls_array = json.loads(jsonstr)['urls']
     print(dat_service.split_target_urls(urls_array))
     return jsonify('ok')
-# @app.before_first_request
-# def init():
-#     current_app.r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
-#     current_app.spider_is_run = True if current_app.r.get('spider_is_run') == '1' else False
+
+
+@app.route('/get_spider_names', methods=['GET'])
+def get_spider_names():
+    return jsonify(dat_service.get_spider_count_from_db())
+
+
+@app.before_first_request
+def init():
+    current_app.r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
+    current_app.spider_is_run = True if current_app.r.get('spider_is_run') == '1' else False
 
 
 if __name__ == '__main__':
